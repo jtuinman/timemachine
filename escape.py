@@ -1,12 +1,7 @@
 import configparser
-import logging
 import os
 
 from flask import Flask, render_template, jsonify
-import time
-import atexit
-import sys
-import re
 
 rpi_complete_mode = False
 try:
