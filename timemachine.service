@@ -1,0 +1,12 @@
+[Unit]
+Description=Escape time machine python app
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+PIDFile=/var/run/timemachine.pid
+WorkingDirectory=/home/pi/timemachine
+ExecStart=/usr/bin/python escape.py
+
+[Install]
+WantedBy=multi-user.target
