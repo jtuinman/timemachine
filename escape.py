@@ -28,6 +28,6 @@ def hello_world():
 ##Init stuff
 configfilename = "escape.conf"
 configfile = (os.path.join(os.getcwd(), configfilename))
-config = configparser.SafeConfigParser()
+config = configparser.ConfigParser()
 
 app.run(debug=config.getboolean("Escape", "debug"),host="0.0.0.0",port=config.getint("Escape", "port"),threaded=True)
