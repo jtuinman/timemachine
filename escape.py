@@ -18,7 +18,6 @@ app = Flask(__name__)
 ### Flask methods
 @app.route('/')
 def hello_world():
-    config.read(configfile)
     return config['Escape']['debug']
 
 
@@ -33,5 +32,4 @@ except:
     print("Could not read " + configfile)
     sys.exit()
 
-##app.run(debug=config['DEFAULT']['debug'],host="0.0.0.0",port=config['DEFAULT']['port'],threaded=True)
 app.run(debug=config.getboolean("Escape", "debug"),host="0.0.0.0",port=config.getint("Escape", "port"),threaded=True)
