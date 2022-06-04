@@ -2,7 +2,7 @@ import configparser
 import os
 import sys
 
-from flask import Flask, render_template, jsonify
+from flask import Flask
 
 rpi_complete_mode = False
 try:
