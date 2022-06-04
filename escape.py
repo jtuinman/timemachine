@@ -17,7 +17,7 @@ app = Flask(__name__)
 ### Flask methods
 @app.route('/')
 def hello_world():
-    return configfile
+    return config.getint('DEFAULT', 'port')
 
 
 ##Init stuff
