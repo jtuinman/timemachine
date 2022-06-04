@@ -17,7 +17,7 @@ app = Flask(__name__)
 ### Flask methods
 @app.route('/')
 def hello_world():
-    return config.read(configfilename)
+    return str(config.read(configfilename))
 
 
 ##Init stuff
