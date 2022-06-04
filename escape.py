@@ -19,7 +19,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     config.read(configfile)
-    return config['DEFAULT']['debug']
+    return config['Escape']['debug']
 
 
 ##Init stuff
