@@ -14,7 +14,6 @@ except Exception:
 
 app = Flask(__name__)
 
-
 ### Flask methods
 @app.route('/')
 def hello_world():
