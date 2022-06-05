@@ -35,6 +35,7 @@ def hello_world():
 ##switching an output pin to high or low
 @app.route('/switch/<pinname>/<newstate>')
 def flask_set_switch(pinname, newstate):
+    logger.info(pinname)
     pin = outputpins[pinname]
     to_on = newstate == "1"
     logger.info("Got web request to turn pin " + pin.name + (" ON" if to_on else " OFF"))
