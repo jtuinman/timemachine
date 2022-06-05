@@ -18,6 +18,17 @@
     <div class="row">
         <div id="home" class="col s12">
             <div class="row">
+                <!-- All the states known to the system, passed on page creation -->
+                {% for state in states.values() %}
+                <div class="col s6 m6 l3" id="statelist">
+                    <div class="card lighten-5" id="{{ state }}" onclick="forceState(this, '{{ state }}')">
+                        <div class="card-content deep-orange-text darken-4">
+                            <span class="card-title">{{ state }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>                
                 <!-- All the output pins known to the system, passed on page creation -->
                 {% for pin in outputpins.values() %}
                 <div class="col s6 m3 l1">

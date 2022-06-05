@@ -34,7 +34,7 @@ readeable_states = {STATE_START:'Standby',STATE_NORMAL:'Entree',STATE_KEYTIME:'B
 app = Flask(__name__)
 
 
-def state_machine_start():
+def state_machine_standby():
     global state
     state = STATE_START ## standby
     logger.info("Now going into state " + readeable_states[state])
@@ -47,6 +47,45 @@ def state_machine_start():
     pin7.turn_off()
     pin8.turn_off()        
 
+def state_machine_state1():
+    global state
+    state = STATE_NORMAL
+    logger.info("Now going into state " + readeable_states[state])
+    pin1.turn_off()
+    pin2.turn_on()
+    pin3.turn_off()
+    pin4.turn_on()
+    pin5.turn_off()
+    pin6.turn_on()
+    pin7.turn_off()
+    pin8.turn_on()    
+
+def state_machine_state2():
+    global state
+    state = STATE_KEYTIME
+    logger.info("Now going into state " + readeable_states[state])
+    pin1.turn_on()
+    pin2.turn_on()
+    pin3.turn_on()
+    pin4.turn_on()
+    pin5.turn_off()
+    pin6.turn_off()
+    pin7.turn_off()
+    pin8.turn_off() 
+
+def state_machine_finalstate():
+    global state
+    state = STATE_AFTER_KEYTIME
+    logger.info("Now going into state " + readeable_states[state])
+    pin1.turn_off()
+    pin2.turn_off()
+    pin3.turn_off()
+    pin4.turn_off()
+    pin5.turn_on()
+    pin6.turn_on()
+    pin7.turn_on()
+    pin8.turn_on() 
+
 ### Flask methods
 @app.route('/')
 def hello_world():
@@ -58,7 +97,6 @@ def hello_world():
 ##switching an output pin to high or low
 @app.route('/switch/<pinname>/<newstate>')
 def flask_set_switch(pinname, newstate):
-    logger.info(pinname)
     pin = outputpins[pinname]
     to_on = newstate == "1"
     logger.info("Got web request to turn pin " + pin.name + (" ON" if to_on else " OFF"))
@@ -79,6 +117,18 @@ def flask_state():
                    logs=entriesHandler.get_last_entries()
                    )
 
+@app.route('/state/<newstate>')
+def flask_set_state(newstate):
+    logger.info("Got web request for state " + newstate)
+    if newstate == readeable_states[STATE_START]:
+        state_machine_standby()
+    elif newstate == readeable_states[STATE_NORMAL]:
+        state_machine_state1()
+    elif newstate == readeable_states[STATE_KEYTIME]:
+        state_machine_state2()
+    else:
+        state_machine_finalstate()
+    return jsonify(result="ok")
 
 
 ##Init stuff
