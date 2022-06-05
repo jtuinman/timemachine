@@ -73,7 +73,7 @@ def flask_set_switch(pinname, newstate):
 
 @app.route('/state')
 def flask_state():
-    outputpinstates = {pinname: pin.is_on for (pinname, pin) in outputpins.iteritems()}
+    outputpinstates = {pinname: pin.is_on for (pinname, pin) in outputpins.items()}
     return jsonify(state=readeable_states[state],
                    outputpins=outputpinstates,
                    logs=entriesHandler.get_last_entries()
