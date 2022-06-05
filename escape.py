@@ -43,7 +43,7 @@ def run_state_machine(self):
     ## Measuring buttons states before investigating current state
     time.sleep(0.3)
     button1pushed = GPIO.input(buttonpin1)
-    logger.info("Buttons push, now in: button1 " + str(button1pushed))
+    logger.info("Button pushed. button1: " + str("ON" if button1pushed else "OFF"))
 
 def state_machine_standby():
     global state
