@@ -169,8 +169,8 @@ logger.setLevel(logging.INFO)
 logger.info("Initalizing pins")
 
 buttonpin1 = config.getint("Escape", "buttonpin1")
-GPIO.setup(buttonpin1, GPIO.IN)
-GPIO.add_event_detect(buttonpin1, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
+GPIO.setup(buttonpin1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.add_event_detect(buttonpin1, GPIO.RISING, callback=run_state_machine, bouncetime=200)
 
 pin1 = OutputPin(config.getint("Escape", "pin1"), "Pin1")
 time.sleep(0.5)
