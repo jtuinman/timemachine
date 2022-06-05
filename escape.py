@@ -174,8 +174,8 @@ outputpins = {pin1.name:pin1, pin2.name:pin2, pin3.name:pin3, pin4.name:pin4, pi
 
 ## Default setting is state_normal. By running reset we set all the switches in the correct
 ## order.
-state_machine_state1()
-state = STATE_STATE1
+state_machine_standby()
+state = STATE_STANDBY
 
 if rpi_complete_mode:
     logger.error("RPi found, running on Pi mode")
