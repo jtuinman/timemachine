@@ -16,6 +16,16 @@
 
 <body>
     <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s3">
+                    <a href="#home">Scenes</a>
+                </li>
+                <li class="tab col s3">
+                    <a href="#log">System</a>
+                </li>
+            </ul>
+        </div>
         <div id="home" class="col s12">
             <div class="row">
                 <!-- All the states known to the system, passed on page creation -->
@@ -45,6 +55,20 @@
                 {% endfor %}
             </div>
         </div>
+
+        <div id="log" class="col s12">
+            <div class="section">
+                <h4>System</h4>
+                <div class="divider"></div>   
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul id="loglist" class="collection"></ul>
+                    </div>
+                </div>
+            </div>
+
+
+
     </div>
 
     <script src="static/js/jquery-2.1.1.min.js"></script>
