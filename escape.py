@@ -68,6 +68,17 @@ cabinet = OutputPin(config.getint("Escape", "cabinetpin"), "Cabinet")
 time.sleep(0.5)
 outputpins = {fastenseatbeltlight.name:fastenseatbeltlight, magnet.name:magnet, cabinet.name:cabinet}    
 
+if rpi_complete_mode:
+    logger.error("RPi found, running on Pi mode")
+else:
+    logger.error("RPi NOT found. Running in fake mode")
 
+debug = config.getboolean("Escape", "debug")
+if debug:
+    logger.error("Running in debug mode, app will restart.")
+    if rpi_complete_mode:
+        logger.error("This might cause weird behaviour on the Pi, so please don't do that")
+
+logger.error("Starting app complete")
 
 app.run(debug=config.getboolean("Escape", "debug"),host="0.0.0.0",port=config.getint("Escape", "port"),threaded=True)
