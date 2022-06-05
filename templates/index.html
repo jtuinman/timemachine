@@ -38,9 +38,26 @@
                     </div>
                 </div>
                 {% endfor %}
-            </div>                
+            </div> 
+            <div class="row">               
                 <!-- All the output pins known to the system, passed on page creation -->
                 {% for pin in outputpins.values() %}
+                <div class="col s6 m3 l1">
+                    {{ pin.name }}
+                    <div class="switch">
+                        <label>
+                            Uit
+                            <input type="checkbox" name="switchbutton" id="{{ pin.name }}" {% if pin.is_on %}checked{% endif %}>
+                            <span class="lever"></span>
+                            Aan
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">               
+                <!-- All the input pins known to the system, passed on page creation -->
+                {% for pin in inputpins.values() %}
                 <div class="col s6 m3 l1">
                     {{ pin.name }}
                     <div class="switch">
@@ -89,6 +106,11 @@
                 for (var pin in data.outputpins) {
                     $("#" + pin).prop('checked', data.outputpins[pin], true)
                 }
+
+                for (var pin in data.inputpins) {
+                    $("#" + pin).prop('checked', data.inputpins[pin], true)
+                }
+
 
                 if (data.logs) {
                     $("#loglist").empty();

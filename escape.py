@@ -124,8 +124,10 @@ def flask_set_switch(pinname, newstate):
 @app.route('/state')
 def flask_state():
     outputpinstates = {pinname: pin.is_on for (pinname, pin) in outputpins.items()}
+    inputpinstates = {pinname: pin.is_on for (pinname, pin) in inputpins.items()}
     return jsonify(state=readeable_states[state],
                    outputpins=outputpinstates,
+                   inputpins=inputpinstates,
                    logs=entriesHandler.get_last_entries()
                    )
 
@@ -189,7 +191,7 @@ time.sleep(0.5)
 pin8 = OutputPin(config.getint("Escape", "pin8"), "Pin8")
 time.sleep(0.5)
 outputpins = {pin1.name:pin1, pin2.name:pin2, pin3.name:pin3, pin4.name:pin4, pin5.name:pin5, pin6.name:pin6, pin7.name:pin7, pin8.name:pin8 }    
-
+inputpins = {buttonpin1}
 
 ## Default setting is state_normal. By running reset we set all the switches in the correct
 ## order.
