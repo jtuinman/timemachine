@@ -50,7 +50,7 @@ def flask_set_switch(pinname, newstate):
 ##Init stuff
 configfilename = "escape.conf"
 configfile = (os.path.join(os.getcwd(), configfilename))    
-config = configparser.SafeConfigParser()
+config = configparser.ConfigParser()
 try:
     with open(configfile,'r') as configfilefp:
         config.read_file(configfilefp)
