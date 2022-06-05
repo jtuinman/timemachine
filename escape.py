@@ -25,18 +25,18 @@ logger.addHandler(entriesHandler)
 logger.setLevel(logging.INFO)
 
 ## Constants
-STATE_NORMAL = 10
-STATE_KEYTIME = 11
-STATE_AFTER_KEYTIME = 12
-STATE_START = 13
-readeable_states = {STATE_START:'Standby',STATE_NORMAL:'Entree',STATE_KEYTIME:'Badkamer',STATE_AFTER_KEYTIME:'Eindspel'}
+STATE_STATE1 = 10
+STATE_STATE2 = 11
+STATE_FINALSTATE = 12
+STATE_STANDBY = 13
+readeable_states = {STATE_START:'Standby',STATE_NORMAL:'State 1',STATE_KEYTIME:'State 2',STATE_AFTER_KEYTIME:'Final state'}
 
 app = Flask(__name__)
 
 
 def state_machine_standby():
     global state
-    state = STATE_START ## standby
+    state = STATE_STANDBY ## standby
     logger.info("Now going into state " + readeable_states[state])
     pin1.turn_off()
     pin2.turn_off()
@@ -49,7 +49,7 @@ def state_machine_standby():
 
 def state_machine_state1():
     global state
-    state = STATE_NORMAL
+    state = STATE_STATE1
     logger.info("Now going into state " + readeable_states[state])
     pin1.turn_off()
     pin2.turn_on()
@@ -62,7 +62,7 @@ def state_machine_state1():
 
 def state_machine_state2():
     global state
-    state = STATE_KEYTIME
+    state = STATE_STATE2
     logger.info("Now going into state " + readeable_states[state])
     pin1.turn_on()
     pin2.turn_on()
@@ -75,7 +75,7 @@ def state_machine_state2():
 
 def state_machine_finalstate():
     global state
-    state = STATE_AFTER_KEYTIME
+    state = STATE_FINALSTATE
     logger.info("Now going into state " + readeable_states[state])
     pin1.turn_off()
     pin2.turn_off()
@@ -121,11 +121,11 @@ def flask_state():
 @app.route('/state/<newstate>')
 def flask_set_state(newstate):
     logger.info("Got web request for state " + newstate)
-    if newstate == readeable_states[STATE_START]:
+    if newstate == readeable_states[STATE_STANDBY]:
         state_machine_standby()
-    elif newstate == readeable_states[STATE_NORMAL]:
+    elif newstate == readeable_states[STATE_STATE1]:
         state_machine_state1()
-    elif newstate == readeable_states[STATE_KEYTIME]:
+    elif newstate == readeable_states[STATE_STATE2]:
         state_machine_state2()
     else:
         state_machine_finalstate()
@@ -167,7 +167,7 @@ outputpins = {pin1.name:pin1, pin2.name:pin2, pin3.name:pin3, pin4.name:pin4, pi
 ## Default setting is state_normal. By running reset we set all the switches in the correct
 ## order.
 state_machine_standby()
-state = STATE_START
+state = STATE_STANDBY
 
 if rpi_complete_mode:
     logger.error("RPi found, running on Pi mode")
