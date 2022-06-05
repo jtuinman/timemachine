@@ -90,6 +90,7 @@ def state_machine_finalstate():
 @app.route('/')
 def hello_world():
     return render_template("index.html",
+        states=readeable_states,
         outputpins = outputpins,
         refresh_state=config.getint("Escape", "refresh_browser_time"))
     ##return config['Escape']['port']
