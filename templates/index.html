@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Caravan Escape</title>
+
+    <!-- Bootstrap -->
+    <link href="static/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="static/css/materialize.min.css" />
+    <link type="text/css" rel="stylesheet" href="static/css/nouislider.css" />
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-wrapper">
+            <img src="static/images/logo.png" height="100%">
+            <a href="#!" class="brand-logo center" id="swclock">0:00</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down"></ul>
+        </div>
+    </nav>
+
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large red" id="swstart">
+            <i class="large material-icons">play_arrow</i>
+        </a>
+    </div>
+
+    <div class="row">
+        <div id="home" class="col s12">
+            <div class="row">
+                <!-- All the output pins known to the system, passed on page creation -->
+                {% for pin in outputpins.values() %}
+                <div class="col s6 m3 l1">
+                    {{ pin.name }}
+                    <div class="switch">
+                        <label>
+                            Uit
+                            <input type="checkbox" name="switchbutton" id="{{ pin.name }}" {% if pin.is_on %}checked{% endif %}>
+                            <span class="lever"></span>
+                            Aan
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
+    <script type="text/javascript" src="static/js/nouislider.min.js"></script>
+    <script language="javascript">
+        function timestamp() {
+            return Math.floor(Date.now() / 1000)
+        }
+ 
+        var last_state = false;
+        var max_time = {{ max_time }};
+        var refresh_state = {{ refresh_state }};
+
+
+        function get_state() {
+            $.getJSON("/state", function (data) {
+                // Put the switches in the same condition as the server thinks they are
+                for (var pin in data.outputpins) {
+                    $("#" + pin).prop('checked', data.outputpins[pin], true);
+                }
+
+                if (data.logs) {
+                    $("#loglist").empty();
+                    for (var log in data.logs) {
+                        $("#loglist").append("<li class='collection-item'>" + data.logs[log])
+                    }
+                }
+            }).fail(function () {
+                toast("Could not connect to server", true)
+            })
+        }
+
+
+
+
+
+        defaulttoasttime = 4000
+        fullrefresh = refresh_state * 1000
+
+
+        var sw_interval
+        var sw_starttime = 0
+        $(document).ready(function () {
+            $('ul.tabs').tabs();
+            // When clicking on a state button, set the state server side and mark the button green
+            // It will catch up later with the getstate function
+
+            // If someone clicks the switch, call the server to follow
+            $("input[name='switchbutton']").on('click', function (e) {
+                $.get("/switch/" + $(this).attr("id") + "/" + ($(this).is(':checked') ? "1" : "0"))
+            })
+
+
+        // Kick off the state Ajax requests, repeat until page death
+        get_state();
+        setInterval(get_state, (refresh_state * 1000))
+            })
+    </script>
+</body>
+
+</html>

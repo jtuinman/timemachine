@@ -3,7 +3,7 @@ import logging
 import os
 import sys
 
-from flask import Flask, jsonify
+from flask import Flask, render_template, jsonify
 import time
 from escape_library import OutputPin, CaravanLoggingHandler
 
@@ -30,7 +30,10 @@ app = Flask(__name__)
 ### Flask methods
 @app.route('/')
 def hello_world():
-    return config['Escape']['port']
+    return render_template("index.html",
+        outputpins = outputpins,
+        refresh_state=config.getint("Escape", "refresh_browser_time"))
+    ##return config['Escape']['port']
 
 ##switching an output pin to high or low
 @app.route('/switch/<pinname>/<newstate>')
