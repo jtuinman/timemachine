@@ -52,10 +52,15 @@
     <script type="text/javascript" src="static/js/nouislider.min.js"></script>
     <script language="javascript">
  
+        var last_state = false;
         var refresh_state = {{ refresh_state }};
 
         function get_state() {
             $.getJSON("/state", function (data) {
+                // First, set all buttons to grey except for the active state
+                $("#statelist div").toggleClass("deep-orange lighten-5 lighten-3", false)
+                $("#" + data.state).toggleClass("deep-orange lighten-5", true)
+
                 // Put the switches in the same condition as the server thinks they are
                 for (var pin in data.outputpins) {
                     $("#" + pin).prop('checked', data.outputpins[pin], true)
@@ -72,16 +77,14 @@
             })
         }
 
-
-
-
+        function forceState(caller, state) {
+            $(caller).toggleClass("deep-orange lighten-3", true)
+            $.get("/state/" + state)
+        }
 
         defaulttoasttime = 4000
         fullrefresh = refresh_state * 1000
 
-
-        var sw_interval
-        var sw_starttime = 0
         $(document).ready(function () {
             $('ul.tabs').tabs();
             // When clicking on a state button, set the state server side and mark the button green
