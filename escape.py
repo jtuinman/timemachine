@@ -30,8 +30,9 @@ app = Flask(__name__)
 ### Flask methods
 @app.route('/')
 def hello_world():
-    return config['Escape']['debug']
+    return config['Escape']['port']
 
+##switching an output pin to high or low
 @app.route('/switch/<pinname>/<newstate>')
 def flask_set_switch(pinname, newstate):
     pin = outputpins[pinname]
