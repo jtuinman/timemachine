@@ -61,13 +61,24 @@ except:
 
 
 ##Init all pins
-fastenseatbeltlight = OutputPin(config.getint("Escape", "seatbeltlightpin"), "Fasten seatbelt light")
+pin1 = OutputPin(config.getint("Escape", "pin1"), "Pin1")
 time.sleep(0.5)
-magnet = OutputPin(config.getint("Escape", "magnetpin"), "Magnet")
+pin2 = OutputPin(config.getint("Escape", "pin2"), "Pin2")
 time.sleep(0.5)
-cabinet = OutputPin(config.getint("Escape", "cabinetpin"), "Cabinet")
+pin3 = OutputPin(config.getint("Escape", "pin3"), "Pin3")
 time.sleep(0.5)
-outputpins = {fastenseatbeltlight.name:fastenseatbeltlight, magnet.name:magnet, cabinet.name:cabinet}    
+pin4 = OutputPin(config.getint("Escape", "pin4"), "Pin4")
+time.sleep(0.5)
+pin5 = OutputPin(config.getint("Escape", "pin5"), "Pin5")
+time.sleep(0.5)
+pin6 = OutputPin(config.getint("Escape", "pin6"), "Pin6")
+time.sleep(0.5)
+pin7 = OutputPin(config.getint("Escape", "pin7"), "Pin7")
+time.sleep(0.5)
+pin8 = OutputPin(config.getint("Escape", "pin8"), "Pin8")
+time.sleep(0.5)
+outputpins = {pin1.name:pin1, pin2.name:pin2, pin3.name:pin3, pin4.name:pin4, pin5.name:pin5, pin6.name:pin6, pin7.name:pin7, pin8.name:pin8 }    
+
 
 if rpi_complete_mode:
     logger.error("RPi found, running on Pi mode")
