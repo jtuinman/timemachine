@@ -19,16 +19,10 @@
     <nav>
         <div class="nav-wrapper">
             <img src="static/images/logo.png" height="100%">
-            <a href="#!" class="brand-logo center" id="swclock">0:00</a>
+            <a href="#!" class="brand-logo center" id="swclock"></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down"></ul>
         </div>
     </nav>
-
-    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-        <a class="btn-floating btn-large red" id="swstart">
-            <i class="large material-icons">play_arrow</i>
-        </a>
-    </div>
 
     <div class="row">
         <div id="home" class="col s12">
@@ -68,7 +62,7 @@
             $.getJSON("/state", function (data) {
                 // Put the switches in the same condition as the server thinks they are
                 for (var pin in data.outputpins) {
-                    $("#" + pin).prop('checked', data.outputpins[pin], true);
+                    $("#" + pin).prop('checked', data.outputpins[pin], true)
                 }
 
                 if (data.logs) {
