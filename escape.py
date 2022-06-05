@@ -24,8 +24,28 @@ logger.addHandler(logging.StreamHandler())
 logger.addHandler(entriesHandler)
 logger.setLevel(logging.INFO)
 
+## Constants
+STATE_NORMAL = 10
+STATE_KEYTIME = 11
+STATE_AFTER_KEYTIME = 12
+STATE_START = 13
+readeable_states = {STATE_START:'Standby',STATE_NORMAL:'Entree',STATE_KEYTIME:'Badkamer',STATE_AFTER_KEYTIME:'Eindspel'}
 
 app = Flask(__name__)
+
+
+def state_machine_start():
+    global state
+    state = STATE_START ## standby
+    logger.info("Now going into state " + readeable_states[state])
+    pin1.turn_off()
+    pin2.turn_off()
+    pin3.turn_off()
+    pin4.turn_off()
+    pin5.turn_off()
+    pin6.turn_off()
+    pin7.turn_off()
+    pin8.turn_off()        
 
 ### Flask methods
 @app.route('/')
@@ -50,6 +70,16 @@ def flask_set_switch(pinname, newstate):
     except Exception as e:
         logger.error("Got exception trying to turn pin, " + str(e))
     return jsonify(result="ok")
+
+@app.route('/state')
+def flask_state():
+    outputpinstates = {pinname: pin.is_on for (pinname, pin) in outputpins.iteritems()}
+    return jsonify(state=readeable_states[state],
+                   outputpins=outputpinstates,
+                   logs=entriesHandler.get_last_entries()
+                   )
+
+
 
 ##Init stuff
 configfilename = "escape.conf"
@@ -82,6 +112,11 @@ pin8 = OutputPin(config.getint("Escape", "pin8"), "Pin8")
 time.sleep(0.5)
 outputpins = {pin1.name:pin1, pin2.name:pin2, pin3.name:pin3, pin4.name:pin4, pin5.name:pin5, pin6.name:pin6, pin7.name:pin7, pin8.name:pin8 }    
 
+
+## Default setting is state_normal. By running reset we set all the switches in the correct
+## order.
+state_machine_start()
+state = STATE_START
 
 if rpi_complete_mode:
     logger.error("RPi found, running on Pi mode")
