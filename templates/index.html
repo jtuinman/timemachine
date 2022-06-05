@@ -108,6 +108,16 @@
 
         defaulttoasttime = 4000
         fullrefresh = refresh_state * 1000
+        function toast(message, shorten) {
+            // If full time, or if the current refresh is longer then the default toast time
+            // I need to make sure that in the other case (shorten AND short refresh rates) toasts don't start piling up
+            if (!shorten || fullrefresh > defaulttoasttime) {
+                Materialize.toast(message, defaulttoasttime)
+            } else {
+                Materialize.toast(message, fullrefresh)
+            }
+        }
+
 
         $(document).ready(function () {
             $('ul.tabs').tabs();
