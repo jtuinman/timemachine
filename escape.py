@@ -131,6 +131,10 @@ def flask_set_state(newstate):
         state_machine_finalstate()
     return jsonify(result="ok")
 
+@app.route('/lastlog')
+def flask_get_lastlog():
+    return jsonify(lastlog=entriesHandler.get_last_entries())
+
 
 ##Init stuff
 configfilename = "escape.conf"
@@ -143,8 +147,12 @@ except:
     print("Could not read " + configfile)
     sys.exit()
 
+## Change logger setting here, to ERROR for less or INFO for more logging
+logger.info("Now initalizing logger")
+logger.setLevel(logging.INFO)
 
 ##Init all pins
+logger.info("Initalizing pins")
 pin1 = OutputPin(config.getint("Escape", "pin1"), "Pin1")
 time.sleep(0.5)
 pin2 = OutputPin(config.getint("Escape", "pin2"), "Pin2")
