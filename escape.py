@@ -5,6 +5,7 @@ import sys
 
 from flask import Flask, render_template, jsonify
 import time
+import atexit
 from escape_library import OutputPin, CaravanLoggingHandler
 
 rpi_complete_mode = False
@@ -33,6 +34,16 @@ readeable_states = {STATE_STANDBY:'Standby',STATE_STATE1:'State 1',STATE_STATE2:
 
 app = Flask(__name__)
 
+def clean():
+    logger.info("Exit coming up, cleaning GPIO")
+    if GPIO:
+        GPIO.cleanup()
+
+def run_state_machine(self):
+    ## Measuring buttons states before investigating current state
+    time.sleep(0.3)
+    button1pushed = GPIO.input(buttonpin1)
+    logger.info("Buttons push, now in: button1 " + str(button1pushed))
 
 def state_machine_standby():
     global state
@@ -147,12 +158,20 @@ except:
     print("Could not read " + configfile)
     sys.exit()
 
+## When CTRL-Cing python script, make sure that the mixer and pins are released
+atexit.register(clean)
+
 ## Change logger setting here, to ERROR for less or INFO for more logging
 logger.info("Now initalizing logger")
 logger.setLevel(logging.INFO)
 
 ##Init all pins
 logger.info("Initalizing pins")
+
+buttonpin1 = config.getint("Escape", "buttonpin1")
+GPIO.setup(buttonpin1, GPIO.IN)
+GPIO.add_event_detect(buttonpin1, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
+
 pin1 = OutputPin(config.getint("Escape", "pin1"), "Pin1")
 time.sleep(0.5)
 pin2 = OutputPin(config.getint("Escape", "pin2"), "Pin2")
