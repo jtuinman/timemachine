@@ -48,8 +48,17 @@ def run_state_machine(self):
     flick2 = GPIO.input(flickswitch2)
     reed1 = GPIO.input(reedswitch1)
 
-    #logger.info("Button pushed. button1: " + str("ON" if button1pushed else "OFF"))
     logger.info("Buttons push, now in: push1 " + str(push1) + ", push2 " + str(push2) + ", flick1 " + str(flick1) + ", flick2 " + str(flick2) + ", reed " + str(reed1))
+
+    if push1 and push2 and state == STATE_STATE1:
+        logger.info("Correct buttons pushed for state 2")
+        state_machine_state2()
+    elif flick1 and flick2 and state == STATE_STATE2:
+        logger.info("Correct buttons pushed for final state")
+        state_machine_finalstate()
+    elif reed1 state == STATE_FINALSTATE:
+        state_machine_standby()
+
 
 def state_machine_standby():
     global state
