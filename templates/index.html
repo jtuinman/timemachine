@@ -84,7 +84,7 @@
             $.getJSON("/state", function (data) {
                 // First, set all buttons to grey except for the active state
                 $("#statelist div").toggleClass("deep-orange lighten-5 lighten-3", false)
-                $("#" + data.state).toggleClass("deep-orange lighten-5", true)
+                $("#" +  data.state).toggleClass("deep-orange lighten-5", true)
 
                 // Put the switches in the same condition as the server thinks they are
                 for (var pin in data.outputpins) {
