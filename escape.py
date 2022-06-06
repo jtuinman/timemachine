@@ -163,6 +163,11 @@ def flask_set_state(newstate):
 def flask_get_lastlog():
     return jsonify(lastlog=entriesHandler.get_last_entries())
 
+@app.route('/shutdown')
+def flask_shutdown():
+    os.system("/sbin/shutdown -h now")
+    time.sleep(1)
+    sys.exit()
 
 ##Init stuff
 configfilename = "escape.conf"
