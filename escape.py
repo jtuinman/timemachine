@@ -56,7 +56,7 @@ def run_state_machine(self):
     elif flick1 and flick2 and state == STATE_STATE2:
         logger.info("Correct buttons pushed for final state")
         state_machine_finalstate()
-    elif reed1 state == STATE_FINALSTATE:
+    elif reed1 and state == STATE_FINALSTATE:
         state_machine_standby()
 
 
