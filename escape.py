@@ -188,7 +188,7 @@ flickswitch1 = config.getint("Escape", "flickswitch1")
 GPIO.setup(flickswitch1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.add_event_detect(flickswitch1, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
 
-flickswitch2 = config.getint("Escape", "buttonflickswitch2pin4")
+flickswitch2 = config.getint("Escape", "flickswitch2")
 GPIO.setup(flickswitch2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.add_event_detect(flickswitch2, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
 
