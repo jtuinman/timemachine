@@ -42,14 +42,14 @@ def clean():
 def run_state_machine(self):
     ## Measuring buttons states before investigating current state
     time.sleep(0.3)
-    pushbutton1 = GPIO.input(pushbutton1)
-    pushbutton2 = GPIO.input(pushbutton2)
-    flickswitch1 = GPIO.input(flickswitch1)
-    flickswitch2 = GPIO.input(flickswitch2)
-    reedswitch1 = GPIO.input(reedswitch1)
+    push1 = GPIO.input(pushbutton1)
+    push2 = GPIO.input(pushbutton2)
+    flick1 = GPIO.input(flickswitch1)
+    flick2 = GPIO.input(flickswitch2)
+    reed1 = GPIO.input(reedswitch1)
 
     #logger.info("Button pushed. button1: " + str("ON" if button1pushed else "OFF"))
-    logger.info("Buttons push, now in: push1 " + str(pushbutton1) + ", push2 " + str(pushbutton2) + ", flick1 " + str(flickswitch1) + ", flick2 " + str(flickswitch2) + ", reed " + str(reedswitch1))
+    logger.info("Buttons push, now in: push1 " + str(push1) + ", push2 " + str(push2) + ", flick1 " + str(flick1) + ", flick2 " + str(flick2) + ", reed " + str(reed1))
 
 def state_machine_standby():
     global state
