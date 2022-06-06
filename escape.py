@@ -30,7 +30,7 @@ STATE_STATE1 = 10
 STATE_STATE2 = 11
 STATE_FINALSTATE = 12
 STATE_STANDBY = 13
-readeable_states = {STATE_STANDBY:'Standby',STATE_STATE1:'State 1',STATE_STATE2:'State 2',STATE_FINALSTATE:'Final state'}
+readeable_states = {STATE_STANDBY:'Standby',STATE_STATE1:'State1',STATE_STATE2:'State2',STATE_FINALSTATE:'FinalState'}
 
 app = Flask(__name__)
 
