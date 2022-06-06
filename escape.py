@@ -43,7 +43,13 @@ def run_state_machine(self):
     ## Measuring buttons states before investigating current state
     time.sleep(0.3)
     button1pushed = GPIO.input(buttonpin1)
-    logger.info("Button pushed. button1: " + str("ON" if button1pushed else "OFF"))
+    button2pushed = GPIO.input(buttonpin2)
+    button3pushed = GPIO.input(buttonpin3)
+    button4pushed = GPIO.input(buttonpin4)
+    button5pushed = GPIO.input(buttonpin5)
+
+    #logger.info("Button pushed. button1: " + str("ON" if button1pushed else "OFF"))
+    logger.info("Buttons push, now in: push1 " + str(button1pushed) + ", push2 " + str(button2pushed) + ", flick1 " + str(button3pushed) + ", flick2 " + str(button4pushed) + ", reed " + str(button5pushed))
 
 def state_machine_standby():
     global state
@@ -173,6 +179,22 @@ logger.info("Initalizing pins")
 buttonpin1 = config.getint("Escape", "buttonpin1")
 GPIO.setup(buttonpin1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.add_event_detect(buttonpin1, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
+
+buttonpin2 = config.getint("Escape", "buttonpin2")
+GPIO.setup(buttonpin2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.add_event_detect(buttonpin2, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
+
+buttonpin3 = config.getint("Escape", "buttonpin3")
+GPIO.setup(buttonpin3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.add_event_detect(buttonpin3, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
+
+buttonpin4 = config.getint("Escape", "buttonpin4")
+GPIO.setup(buttonpin4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.add_event_detect(buttonpin4, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
+
+buttonpin5 = config.getint("Escape", "buttonpin5")
+GPIO.setup(buttonpin5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.add_event_detect(buttonpin5, GPIO.BOTH, callback=run_state_machine, bouncetime=200)
 
 pin1 = OutputPin(config.getint("Escape", "pin1"), "Pin1")
 time.sleep(0.5)
