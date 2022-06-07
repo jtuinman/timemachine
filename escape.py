@@ -103,6 +103,7 @@ def state_machine_state2():
     pin6.turn_off()
     pin7.turn_off()
     pin8.turn_off() 
+    play_music(sounddir + config.get("Escape","music_state_state2"))
 
 def state_machine_finalstate():
     global state
@@ -116,6 +117,7 @@ def state_machine_finalstate():
     pin6.turn_on()
     pin7.turn_on()
     pin8.turn_on() 
+    play_music(sounddir + config.get("Escape","music_state_finalstate"))
 
 ## Background music, changes for each scene
 ## Note that the fade blocks the state_machine from ansering requests, so in theory if players are fast they
