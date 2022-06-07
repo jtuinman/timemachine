@@ -1,6 +1,7 @@
 import configparser
 import logging
 import os
+os.environ['SDL_AUDIODRIVER'] = 'dsp'
 import pygame
 
 
