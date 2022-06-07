@@ -219,7 +219,7 @@ except:
 if not pygame.mixer.get_init():
     logger.info("Now initalizing mixer")
     pygame.mixer.pre_init(44100, -16, 2, 2048)
-    pygame.mixer.init()
+    pygame.init()
 
 ## When CTRL-Cing python script, make sure that the mixer and pins are released
 atexit.register(clean)
