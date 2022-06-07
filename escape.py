@@ -38,7 +38,8 @@ readeable_states = {STATE_STANDBY:'Standby',STATE_STATE1:'State1',STATE_STATE2:'
 app = Flask(__name__)
 
 def clean():
-    logger.info("Exit coming up, cleaning GPIO")
+    logger.info("Exit coming up, cleaning mixer and GPIO")
+    pygame.mixer.quit()
     if GPIO:
         GPIO.cleanup()
 
@@ -171,6 +172,7 @@ def flask_set_switch(pinname, newstate):
 
 @app.route('/state')
 def flask_state():
+    playing_music = music if pygame.mixer.music.get_busy() else False
     outputpinstates = {pinname: pin.is_on for (pinname, pin) in outputpins.items()}
     #inputpinstates = {pinname: pin.is_on for (pinname, pin) in inputpins.items()}
     return jsonify(state=readeable_states[state],
@@ -212,6 +214,12 @@ try:
 except:
     print("Could not read " + configfile)
     sys.exit()
+
+## Set up mixer now while time is still cheap
+if not pygame.mixer.get_init():
+    logger.info("Now initalizing mixer")
+    pygame.mixer.pre_init(44100, -16, 2, 2048)
+    pygame.mixer.init()
 
 ## When CTRL-Cing python script, make sure that the mixer and pins are released
 atexit.register(clean)
