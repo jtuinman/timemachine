@@ -1,9 +1,12 @@
 import configparser
 import logging
 import os
+<<<<<<< HEAD
 import pygame
 import publisher
 import json
+=======
+>>>>>>> 1cfbdb04346fb2956ba711a8c5550a5f156444c3
 
 from flask import Flask, render_template, jsonify
 import time
@@ -39,8 +42,7 @@ readeable_states = {STATE_STANDBY:'Standby',STATE_STATE1:'State1',STATE_STATE2:'
 app = Flask(__name__)
 
 def clean():
-    logger.info("Exit coming up, cleaning mixer and GPIO")
-    #pygame.mixer.quit()
+    logger.info("Exit coming up, cleanings GPIO")
     if GPIO:
         GPIO.cleanup()
 
@@ -77,8 +79,7 @@ def state_machine_standby():
     pin6.turn_off()
     pin7.turn_off()
     pin8.turn_off()        
-    #stop_music()
-
+    
 def state_machine_state1():
     global state
     state = STATE_STATE1
@@ -91,6 +92,7 @@ def state_machine_state1():
     pin6.turn_on()
     pin7.turn_off()
     pin8.turn_on()
+<<<<<<< HEAD
     volumelevel = "50%"
     message = {
         "turn up volume by:": volumelevel
@@ -99,6 +101,9 @@ def state_machine_state1():
     clientPublish.publish("PLANTNET/LIGHT", jsonDump)
     #play_music(sounddir + config.get("Escape","music_state_state1"))
 
+=======
+    
+>>>>>>> 1cfbdb04346fb2956ba711a8c5550a5f156444c3
 def state_machine_state2():
     global state
     state = STATE_STATE2
@@ -111,8 +116,7 @@ def state_machine_state2():
     pin6.turn_off()
     pin7.turn_off()
     pin8.turn_off() 
-    #play_music(sounddir + config.get("Escape","music_state_state2"))
-
+    
 def state_machine_finalstate():
     global state
     state = STATE_FINALSTATE
@@ -125,33 +129,7 @@ def state_machine_finalstate():
     pin6.turn_on()
     pin7.turn_on()
     pin8.turn_on() 
-    #play_music(sounddir + config.get("Escape","music_state_finalstate"))
-
-## Background music, changes for each scene
-## Note that the fade blocks the state_machine from ansering requests, so in theory if players are fast they
-## will need to pull triggers multiple times
-#music = None
-#def play_music(soundpath):
-#    stop_music()
-#    global music
-#    pygame.mixer.music.load(soundpath)
-#    music = soundpath
-#    pygame.mixer.music.set_volume(float(music_volume) / 100)
-#    pygame.mixer.music.play(-1)
-#    while pygame.mixer.music.get_busy():
-#        pygame.time.Clock().tick(10)
-
-#def stop_music():
-#    fade = config.getint("Escape","fadeout")
-#    if pygame.mixer.music.get_busy():
-#        pygame.mixer.music.fadeout(fade * 1000)
-#        time.sleep(fade)
-#   global music
-#    music = None
-
-#def get_sounds_from_folder(dir):
-#    return sorted([f for f in os.listdir(dir) if re.search(r'.+\.(wav|ogg|mp3)$', f)])
-
+    
 
 ### Flask methods
 @app.route('/')
@@ -160,8 +138,7 @@ def hello_world():
         states=readeable_states,
         outputpins = outputpins,
         refresh_state=config.getint("Escape", "refresh_browser_time"))
-    ##return config['Escape']['port']
-
+    
 ##switching an output pin to high or low
 @app.route('/switch/<pinname>/<newstate>')
 def flask_set_switch(pinname, newstate):
@@ -179,7 +156,6 @@ def flask_set_switch(pinname, newstate):
 
 @app.route('/state')
 def flask_state():
-    #playing_music = music if pygame.mixer.music.get_busy() else False
     outputpinstates = {pinname: pin.is_on for (pinname, pin) in outputpins.items()}
     return jsonify(state=readeable_states[state],
                    outputpins=outputpinstates,
@@ -219,12 +195,6 @@ try:
 except:
     print("Could not read " + configfile)
     sys.exit()
-
-## Set up mixer now while time is still cheap
-#if not pygame.mixer.get_init():
-#    logger.info("Now initalizing mixer")
-#    pygame.mixer.pre_init(44100, -16, 2, 2048)
-#    pygame.mixer.init()
 
 ## When CTRL-Cing python script, make sure that the mixer and pins are released
 atexit.register(clean)
@@ -274,10 +244,6 @@ pin8 = OutputPin(config.getint("Escape", "pin8"), "Pin8")
 time.sleep(0.5)
 outputpins = {pin1.name:pin1, pin2.name:pin2, pin3.name:pin3, pin4.name:pin4, pin5.name:pin5, pin6.name:pin6, pin7.name:pin7, pin8.name:pin8 }    
 
-sounddir = config.get("Escape", "sounddir") + "/"
-music_volume = config.getfloat("Escape", "music_volume")
-sound_volume = config.getfloat("Escape", "sound_volume")
-#pygame.mixer.music.set_volume(music_volume / 100)
 
 ## Default setting is state_normal. By running reset we set all the switches in the correct
 ## order.

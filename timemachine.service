@@ -7,6 +7,8 @@ After=network-online.target
 PIDFile=/var/run/timemachine.pid
 WorkingDirectory=/home/pi/timemachine
 ExecStart=/usr/bin/python escape.py
+User=pi
+Group=pi
 
 [Install]
 WantedBy=multi-user.target
