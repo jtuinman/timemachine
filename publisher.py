@@ -4,19 +4,20 @@ import signal
 import sys
 import json
 
-def signal_handler(sig, frame):
-    clientSubscribe.loop_stop()
-    print("Exiting")
-    sys.exit(0)
+class Publish:
+    def signal_handler(sig, frame):
+        clientSubscribe.loop_stop()
+        print("Exiting")
+        sys.exit(0)
 
-def on_message(client, userdata, message):
-    print("received message: " ,str(message.payload.decode("utf-8")))
+    def on_message(client, userdata, message):
+        print("received message: " ,str(message.payload.decode("utf-8")))
 
 
-signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGINT, signal_handler)
 
-clientPublish = mqtt.Client("TestPublish")
-clientPublish.connect("localhost")
+    clientPublish = mqtt.Client("TestPublish")
+    clientPublish.connect("localhost")
 
 #
 #test = "lol"

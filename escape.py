@@ -2,7 +2,7 @@ import configparser
 import logging
 import os
 import pygame
-import publisher
+from publisher import Publish
 import json
 
 from flask import Flask, render_template, jsonify
@@ -94,7 +94,7 @@ def state_machine_state1():
         "turn up volume by:": volumelevel
         }
     jsonDump = json.dumps(message)  
-    clientPublish.publish("PLANTNET/LIGHT", jsonDump)
+    Publish.clientPublish.publish("PLANTNET/LIGHT", jsonDump)
     #play_music(sounddir + config.get("Escape","music_state_state1"))
 
 def state_machine_state2():
