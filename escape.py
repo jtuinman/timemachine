@@ -1,12 +1,9 @@
 import configparser
 import logging
 import os
-<<<<<<< HEAD
 import pygame
 import publisher
 import json
-=======
->>>>>>> 1cfbdb04346fb2956ba711a8c5550a5f156444c3
 
 from flask import Flask, render_template, jsonify
 import time
@@ -92,7 +89,6 @@ def state_machine_state1():
     pin6.turn_on()
     pin7.turn_off()
     pin8.turn_on()
-<<<<<<< HEAD
     volumelevel = "50%"
     message = {
         "turn up volume by:": volumelevel
@@ -101,9 +97,6 @@ def state_machine_state1():
     clientPublish.publish("PLANTNET/LIGHT", jsonDump)
     #play_music(sounddir + config.get("Escape","music_state_state1"))
 
-=======
-    
->>>>>>> 1cfbdb04346fb2956ba711a8c5550a5f156444c3
 def state_machine_state2():
     global state
     state = STATE_STATE2
