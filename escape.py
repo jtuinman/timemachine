@@ -1,7 +1,7 @@
 import configparser
 import logging
 import os
-import pygame
+#import pygame
 from publisher import Publish
 import json
 
