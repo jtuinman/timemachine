@@ -19,26 +19,26 @@ class Publish:
     clientPublish = mqtt.Client("TestPublish")
     clientPublish.connect("192.168.178.30")
 
-#
-#test = "lol"
-#message = {
-#        "timestamp": test
-#        }
-#
-#jsonDump = json.dumps(message)
-#topic="PLANTNET/LIGHT"
-#clientPublish.publish(topic, jsonDump)
-#print(jsonDump)
-#
-#test = "Ha!"
-#message = {
-#        "timestamp": test
-#        }
-#
-#jsonDump = json.dumps(message)
-#topic="PLANTNET/LIGHT"
-#clientPublish.publish(topic, jsonDump)
-#print(jsonDump)
-#
-#time.sleep(10)
-#clientPublish.loop_stop()
+
+test = "lol"
+message = {
+        "timestamp": test
+        }
+
+jsonDump = json.dumps(message)
+topic="PLANTNET/LIGHT"
+clientPublish.publish(topic, jsonDump)
+print(jsonDump)
+
+test = "Ha!"
+message = {
+        "timestamp": test
+        }
+
+jsonDump = json.dumps(message)
+topic="PLANTNET/LIGHT"
+clientPublish.publish(topic, jsonDump)
+print(jsonDump)
+
+time.sleep(10)
+clientPublish.loop_stop()
