@@ -17,7 +17,7 @@ class Publish:
     signal.signal(signal.SIGINT, signal_handler)
 
     clientPublish = mqtt.Client("TestPublish")
-    clientPublish.connect("localhost")
+    clientPublish.connect("192.168.178.30")
 
 #
 #test = "lol"
