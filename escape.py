@@ -91,10 +91,10 @@ def state_machine_state1():
     pin8.turn_on()
     volumelevel = "50%"
     message = {
-        "turn up volume by:": volumelevel
+        "Starting music for scene:": readeable_states[state]
         }
     jsonDump = json.dumps(message)  
-    Publish.clientPublish.publish("PLANTNET/LIGHT", jsonDump)
+    Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
     #play_music(sounddir + config.get("Escape","music_state_state1"))
 
 def state_machine_state2():
