@@ -76,11 +76,11 @@ def state_machine_standby():
     pin6.turn_off()
     pin7.turn_off()
     pin8.turn_off()        
-    #message = {
-    #    "State " + readeable_states[state] + " has no music"
-    #    }
-    #jsonDump = json.dumps(message)  
-    #Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
+    message = {
+        "State ": + readeable_states[state] + " has no music"
+        }
+    jsonDump = json.dumps(message)  
+    Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
 
 def state_machine_state1():
     global state
@@ -96,7 +96,7 @@ def state_machine_state1():
     pin8.turn_on()
     
     message = {
-        "Starting music for scene:": readeable_states[state]
+        "Starting music for scene": readeable_states[state]
         }
     jsonDump = json.dumps(message)  
     Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
@@ -115,7 +115,7 @@ def state_machine_state2():
     pin7.turn_off()
     pin8.turn_off() 
     message = {
-        "Starting music for scene:": readeable_states[state]
+        "Starting music for scene": readeable_states[state]
         }
     jsonDump = json.dumps(message)  
     Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
@@ -133,7 +133,7 @@ def state_machine_finalstate():
     pin7.turn_on()
     pin8.turn_on() 
     message = {
-        "Starting music for scene:": readeable_states[state]
+        "Starting music for scene": readeable_states[state]
         }
     jsonDump = json.dumps(message)  
     Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
