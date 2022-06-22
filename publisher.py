@@ -16,7 +16,7 @@ class Publish:
 
     signal.signal(signal.SIGINT, signal_handler)
 
-    clientPublish = mqtt.Client("TestPublish")
+    clientPublish = mqtt.Client("EscapeMachine")
     clientPublish.connect("192.168.178.30")
 
 #
