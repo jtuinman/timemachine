@@ -76,7 +76,11 @@ def state_machine_standby():
     pin6.turn_off()
     pin7.turn_off()
     pin8.turn_off()        
-    
+    message = {
+        "State:" + readeable_states[state] + "has no music"
+        }
+    jsonDump = json.dumps(message)  
+    Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
 def state_machine_state1():
     global state
     state = STATE_STATE1
@@ -89,7 +93,7 @@ def state_machine_state1():
     pin6.turn_on()
     pin7.turn_off()
     pin8.turn_on()
-    volumelevel = "50%"
+    
     message = {
         "Starting music for scene:": readeable_states[state]
         }
@@ -109,6 +113,11 @@ def state_machine_state2():
     pin6.turn_off()
     pin7.turn_off()
     pin8.turn_off() 
+    message = {
+        "Starting music for scene:": readeable_states[state]
+        }
+    jsonDump = json.dumps(message)  
+    Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
     
 def state_machine_finalstate():
     global state
@@ -122,6 +131,11 @@ def state_machine_finalstate():
     pin6.turn_on()
     pin7.turn_on()
     pin8.turn_on() 
+    message = {
+        "Starting music for scene:": readeable_states[state]
+        }
+    jsonDump = json.dumps(message)  
+    Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
     
 
 ### Flask methods
