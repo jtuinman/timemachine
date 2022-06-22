@@ -77,10 +77,11 @@ def state_machine_standby():
     pin7.turn_off()
     pin8.turn_off()        
     message = {
-        "State:" + readeable_states[state] + "has no music"
+        "State " + readeable_states[state] + " has no music"
         }
     jsonDump = json.dumps(message)  
     Publish.clientPublish.publish("SOUNDMACHINE/MUSIC", jsonDump)
+
 def state_machine_state1():
     global state
     state = STATE_STATE1
